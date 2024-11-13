@@ -1,0 +1,41 @@
+pipeline{
+    agent any
+
+    stages{
+        stage('Checkout'){
+            steps{
+                git branch: 'main', url: 'https://github.com/Desi-Kamenova/StudentRegistryApp'
+            }
+        }
+
+        stage('Install dependencies'){
+            steps{
+                script{
+                    bat 'npm install'
+                }
+            }
+        }
+
+        stage('Start application'){
+            steps{
+                script{
+                    bat 'npm start'
+                }
+            }
+        }
+
+        stage('Run tests'){
+            steps{
+                script{
+                    bat 'npm test'
+                }
+            }
+        }
+    }
+
+    post{
+        always{
+            echo 'CI pipeline completed'
+        }
+    }
+}
